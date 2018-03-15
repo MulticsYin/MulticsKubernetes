@@ -1,0 +1,17 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: redis
+  namespace: fox-prod
+data:
+  master.conf: |-
+    dir /data
+  slave.conf: |-
+    dir /data
+    slaveof redis-master-0.redis-master.default.svc.cluster.local 6379
+  sentinel.conf: |-
+    sentinel monitor redis-master redis-master-0.redis-master.default.svc.cluster.local 6379 2
+    sentinel down-after-milliseconds redis-master 5000
+    sentinel failover-timeout redis-master 10000
+    sentinel parallel-syncs redis-master 1

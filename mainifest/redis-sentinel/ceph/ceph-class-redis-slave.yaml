@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ceph-redis-slave
+  namespace: fox-prod
+provisioner: kubernetes.io/rbd
+parameters:
+  monitors: 172.16.200.206:6789,172.16.200.208:6789,172.16.200.216:6789
+  adminId: admin
+  adminSecretName: ceph-redis-secret
+  adminSecretNamespace: fox-prod
+  pool: redis-slave
+  userId: admin
+  userSecretName: ceph-redis-secret
+

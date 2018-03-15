@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: redis-slave
+  namespace: fox-prod
+spec:
+  serviceName: redis-slave
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: redis-slave
+        sentinel: "true"
+    spec:
+      containers:
+      - name: redis-slave
+        image: redis:3.2.8
+        imagePullPolicy: Always
+        command: [ "redis-server", "/etc/redis/slave.conf" ]
+        ports:
+        - containerPort: 6379
+          name: redis-slave
+        volumeMounts:
+        - name: redis-config
+          mountPath: /etc/redis
+        - name: data
+          mountPath: /data
+      - name: redis-sentinel
+        image: redis:3.2.8
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 26379
+          name: redis-sentinel
+        command: [ "redis-sentinel", "/etc/redis/sentinel.conf" ]
+        volumeMounts:
+        - name: redis-config
+          mountPath: /etc/redis
+      volumes:
+        - name: redis-config
+          configMap:
+            name: redis
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: ceph-redis-slave
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+spec:
+  ports:
+  - port: 6379
+    name: redis
+  clusterIP: None
+  selector:
+    app: redis-slave
