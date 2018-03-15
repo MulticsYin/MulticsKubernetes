@@ -1,0 +1,7 @@
+###
+# kubernetes proxy config
+
+# default config should be adequate
+
+# Add your own!
+KUBE_PROXY_ARGS="--bind-address=172.16.200.216 --hostname-override=172.16.200.216 --kube-api-burst=50 --kube-api-qps=20  --master=http://172.16.200.216:8080 --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig --cluster-cidr=10.254.0.0/16 --log-dir=/data/logs/kubernetes/ --v=2 --logtostderr=false"
