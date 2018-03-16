@@ -13,7 +13,8 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: sz-pg-oam-docker-hub-001.tendcloud.com/library/heapster-influxdb-amd64:v1.1.1
+        # image: sz-pg-oam-docker-hub-001.tendcloud.com/library/heapster-influxdb-amd64:v1.1.1
+        image: gcr.io/google-containers/heapster-influxdb-amd64:v1.3.3
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage
