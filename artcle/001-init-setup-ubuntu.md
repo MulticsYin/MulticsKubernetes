@@ -2,7 +2,7 @@
 
 ## 安装基本工具
 `bash
-sudo apt-get install -y openssh-server vim
+sudo apt-get install -y openssh-server vim git
 `
 
 ## 系统配置
