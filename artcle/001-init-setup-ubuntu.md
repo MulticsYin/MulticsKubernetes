@@ -16,6 +16,4 @@ sudo apt-get install -y openssh-server vim git htop
 重启 `openssh server`: `sudo systemctl restart ssh.service`
 * 关闭`swap`  
 注释`/etc/fstab` `swap` 部分，运行以下命令暂时生效，不用重启电脑。  
-```bash
-swapoff -a
-```
+`sudo swapoff -a`
