@@ -2,7 +2,7 @@
 
 ## 集群详情
 * OS: Ubuntu 16.04.4 LTS xenial(命令：lsb_release  -a)
-* [kubernetes1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#server-binaries-1)
+* Kubernetes:[kubernetes1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#server-binaries-1)
 * Docker: [docker-ce_17.12.1_ce-0_ubuntu_amd64.deb](https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/)
 * Etcd: [etcd-v3.3.1-linux-amd64.tar.gz](https://github.com/coreos/etcd/releases/)
 * Flannel: [flannel-v0.10.0-linux-amd64.tar.gz](https://github.com/coreos/flannel/releases)
