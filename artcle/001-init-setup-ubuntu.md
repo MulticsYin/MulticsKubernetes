@@ -1,7 +1,7 @@
 # 系统初始化配置
 
 ## 安装基本工具
-`bash
+`sh
 sudo apt-get install -y openssh-server vim git
 `
 
@@ -13,4 +13,5 @@ sudo apt-get install -y openssh-server vim git
 `bash
 sudo passwd root
 `
-设置`root`远程登录，修改`/etc/ssh/sshd_config`文件，找到`PermitRootLogin prohibit-password`一行，改为`PermitRootLogin yes`，重启 openssh server: `sudo systemctl restart ssh.service`
+设置`root`远程登录，修改`/etc/ssh/sshd_config`文件，找到`PermitRootLogin prohibit-password`一行，改为`PermitRootLogin yes`。
+重启 `openssh server`: `sudo systemctl restart ssh.service`
