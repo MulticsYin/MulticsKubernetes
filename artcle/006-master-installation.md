@@ -46,8 +46,7 @@ cd kubernetes
 `server` 的 tarball `kubernetes-server-linux-amd64.tar.gz` 已经包含了 `client`(`kubectl`) 二进制文件，所以不用单独下载`kubernetes-client-linux-amd64.tar.gz`文件；
 
 ```bash
-# wget https://dl.k8s.io/v1.6.0/kubernetes-client-linux-amd64.tar.gz
-wget https://dl.k8s.io/v1.6.0/kubernetes-server-linux-amd64.tar.gz
+wget https://dl.k8s.io/v1.9.3/kubernetes-server-linux-amd64.tar.gz
 tar -xzvf kubernetes-server-linux-amd64.tar.gz
 cd kubernetes
 tar -xzvf  kubernetes-src.tar.gz
@@ -117,8 +116,7 @@ KUBE_LOG_LEVEL="--v=0"
 KUBE_ALLOW_PRIV="--allow-privileged=true"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-#KUBE_MASTER="--master=http://sz-pg-oam-docker-test-001.tendcloud.com:8080"
-KUBE_MASTER="--master=http://172.20.0.113:8080"
+KUBE_MASTER="--master=http://172.16.239.128:8080"
 ```
 
 该配置文件同时被kube-apiserver、kube-controller-manager、kube-scheduler、kubelet、kube-proxy使用。
@@ -134,7 +132,7 @@ apiserver配置文件`/etc/kubernetes/apiserver`内容为：
 #
 ## The address on the local server to listen to.
 #KUBE_API_ADDRESS="--insecure-bind-address=sz-pg-oam-docker-test-001.tendcloud.com"
-KUBE_API_ADDRESS="--advertise-address=172.20.0.113 --bind-address=172.20.0.113 --insecure-bind-address=172.20.0.113"
+KUBE_API_ADDRESS="--advertise-address=172.16.239.128 --bind-address=172.16.239.128 --insecure-bind-address=172.16.239.128"
 #
 ## The port on the local server to listen on.
 #KUBE_API_PORT="--port=8080"
@@ -143,7 +141,7 @@ KUBE_API_ADDRESS="--advertise-address=172.20.0.113 --bind-address=172.20.0.113 -
 #KUBELET_PORT="--kubelet-port=10250"
 #
 ## Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd-servers=https://172.20.0.113:2379,https://172.20.0.114:2379,https://172.20.0.115:2379"
+KUBE_ETCD_SERVERS="--etcd-servers=https://172.16.239.128:2379,https://172.16.239.129:2379,https://172.16.239.130:2379"
 #
 ## Address range to use for services
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
@@ -152,10 +150,9 @@ KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
 KUBE_ADMISSION_CONTROL="--admission-control=ServiceAccount,NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota"
 #
 ## Add your own!
-KUBE_API_ARGS="--authorization-mode=RBAC --runtime-config=rbac.authorization.k8s.io/v1beta1 --kubelet-https=true --experimental-bootstrap-token-auth --token-auth-file=/etc/kubernetes/token.csv --service-node-port-range=30000-32767 --tls-cert-file=/etc/kubernetes/ssl/kubernetes.pem --tls-private-key-file=/etc/kubernetes/ssl/kubernetes-key.pem --client-ca-file=/etc/kubernetes/ssl/ca.pem --service-account-key-file=/etc/kubernetes/ssl/ca-key.pem --etcd-cafile=/etc/kubernetes/ssl/ca.pem --etcd-certfile=/etc/kubernetes/ssl/kubernetes.pem --etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem --enable-swagger-ui=true --apiserver-count=3 --audit-log-maxage=30 --audit-log-maxbackup=3 --audit-log-maxsize=100 --audit-log-path=/var/lib/audit.log --event-ttl=1h"
+KUBE_API_ARGS="--authorization-mode=Node,RBAC --runtime-config=rbac.authorization.k8s.io/v1beta1 --kubelet-https=true --enable-bootstrap-token-auth --token-auth-file=/etc/kubernetes/token.csv --service-node-port-range=30000-32767 --tls-cert-file=/etc/kubernetes/ssl/kubernetes.pem --tls-private-key-file=/etc/kubernetes/ssl/kubernetes-key.pem --client-ca-file=/etc/kubernetes/ssl/ca.pem --service-account-key-file=/etc/kubernetes/ssl/ca-key.pem --etcd-cafile=/etc/kubernetes/ssl/ca.pem --etcd-certfile=/etc/kubernetes/ssl/kubernetes.pem --etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem --enable-swagger-ui=true --apiserver-count=3 --audit-log-maxage=30 --audit-log-maxbackup=3 --audit-log-maxsize=100 --audit-log-path=/var/lib/audit.log --event-ttl=1h"
 ```
 
-+ `--experimental-bootstrap-token-auth` Bootstrap Token Authentication在1.9版本已经变成了正式feature，参数名称改为`--enable-bootstrap-token-auth`
 + 如果中途修改过`--service-cluster-ip-range`地址，则必须将default命名空间的`kubernetes`的service给删除，使用命令：`kubectl delete service kubernetes`，然后系统会自动用新的ip重建这个service，不然apiserver的log有报错`the cluster IP x.x.x.x for service kubernetes/default is not within the service CIDR x.x.x.x/16; please recreate`
 + `--authorization-mode=RBAC` 指定在安全端口使用 RBAC 授权模式，拒绝未通过授权的请求；
 + kube-scheduler、kube-controller-manager 一般和 kube-apiserver 部署在同一台机器上，它们使用**非安全端口**和 kube-apiserver通信;
@@ -168,12 +165,6 @@ KUBE_API_ARGS="--authorization-mode=RBAC --runtime-config=rbac.authorization.k8s
 + `--service-cluster-ip-range` 指定 Service Cluster IP 地址段，该地址段不能路由可达；
 + 缺省情况下 kubernetes 对象保存在 etcd `/registry` 路径下，可以通过 `--etcd-prefix` 参数进行调整；
 + 如果需要开通http的无认证的接口，则可以增加以下两个参数：`--insecure-port=8080 --insecure-bind-address=127.0.0.1`。注意，生产上不要绑定到非127.0.0.1的地址上
-
-**Kubernetes 1.9**
-
-对于Kubernetes1.9集群，需要注意配置`KUBE_API_ARGS`环境变量中的`--authorization-mode=Node,RBAC`，增加对`Node`授权的模式，否则将无法注册node。
-
-完整 unit 见 [kube-apiserver.service](../systemd/kube-apiserver.service)
 
 **启动kube-apiserver**
 
@@ -251,8 +242,6 @@ etcd-1               Healthy     {"health": "true"}
 
 - 如果有组件report unhealthy请参考：https://github.com/kubernetes-incubator/bootkube/issues/64
 
-完整 unit 见 [kube-controller-manager.service](../systemd/kube-controller-manager.service)
-
 ## 配置和启动 kube-scheduler
 
 **创建 kube-scheduler的serivce配置文件**
@@ -292,8 +281,6 @@ KUBE_SCHEDULER_ARGS="--leader-elect=true --address=127.0.0.1"
 ```
 
 + `--address` 值必须为 `127.0.0.1`，因为当前 kube-apiserver 期望 scheduler 和 controller-manager 在同一台机器；
-
-完整 unit 见 [kube-scheduler.service](../systemd/kube-scheduler.service)
 
 ### 启动 kube-scheduler
 
