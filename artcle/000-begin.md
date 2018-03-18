@@ -1,10 +1,10 @@
 # Kubernetes安装教程(暂基于1.9.3，后期会不断更新)
 
 ## 集群详情
-* OS: Ubuntu16.04 4.4.0-87-generic
-* kubernetes1.9.3
-* Docker: docker-ce_17.12.1_ce-0_ubuntu_amd64.deb
-* Etcd: etcd-v3.3.1-linux-amd64.tar.gz
+* OS: Ubuntu 16.04.4 LTS xenial(命令：lsb_release  -a)
+* [kubernetes1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#server-binaries-1)
+* Docker: [docker-ce_17.12.1_ce-0_ubuntu_amd64.deb](https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/)
+* Etcd: [etcd-v3.3.1-linux-amd64.tar.gz](https://github.com/coreos/etcd/releases/)
 * Flannel: flannel-v0.10.0-linux-amd64.tar.gz
 * TLS 认证通信 (所有组件，如 etcd、kubernetes master 和 node)
 * RBAC 授权
