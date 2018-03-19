@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-ingress
+  namespace: default
+spec:
+  rules:
+  - host: traefik.nginx.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: my-nginx
+          servicePort: 80
+  - host: traefik.frontend.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+  - host: rolling-update-test.traefik.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rolling-update-test
+          servicePort: 9090
+  - host: k8s-app-monitor-agent.jimmysong.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: k8s-app-monitor-agent
+          servicePort: 8080
+  - host: mean.jimmysong.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: orbiting-platypus-mean
+          servicePort: 80
+  - host: helm.jimmysong.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: monocular-monocular-ui
+          servicePort: 80
+      - path: /api/
+        backend:
+          serviceName: monocular-monocular-api
+          servicePort: 80
