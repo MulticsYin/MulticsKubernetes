@@ -26,6 +26,19 @@
 注意：192.168.177.132这台主机master和node复用。所有生成证书、执行kubectl命令的操作都在这台节点上执行。一旦node加入到kubernetes集群之后就不需要再登陆node节点了。
 
 
+## Kubernetes 二进制部署
+* [系统初始化配置](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/001-init-setup-ubuntu.md#%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE)
+* [创建TLS证书和秘钥](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/002-create-tls-and-secret-key.md#%E5%88%9B%E5%BB%BAtls%E8%AF%81%E4%B9%A6%E5%92%8C%E7%A7%98%E9%92%A5)
+* [安装kubectl命令行工具](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/003-kubectl-installation.md#%E5%AE%89%E8%A3%85kubectl%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7)
+* [创建 kubeconfig 文件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/004-create-kubeconfig.md#%E5%88%9B%E5%BB%BA-kubeconfig-%E6%96%87%E4%BB%B6)
+* [创建高可用 etcd 集群](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/005-etcd-cluster-installation.md#%E5%88%9B%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8-etcd-%E9%9B%86%E7%BE%A4)
+* [部署master节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/006-master-installation.md#%E9%83%A8%E7%BD%B2master%E8%8A%82%E7%82%B9)
+* [安装flannel网络插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/007-flannel-installation.md#%E5%AE%89%E8%A3%85flannel%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6)
+* [部署node节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/008-node-installation.md#%E9%83%A8%E7%BD%B2node%E8%8A%82%E7%82%B9)
+* [安装kubedns插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/009-kubedns-addon-installation.md#%E5%AE%89%E8%A3%85kubedns%E6%8F%92%E4%BB%B6)
+* [安装dashboard插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/010-dashboard-addon-installation.md#%E5%AE%89%E8%A3%85dashboard%E6%8F%92%E4%BB%B6)
+* [安装heapster插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/011-heapster-addon-installation.md#%E5%AE%89%E8%A3%85heapster%E6%8F%92%E4%BB%B6)
+* [安装EFK插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/012-efk-addon-installation.md#%E5%AE%89%E8%A3%85efk%E6%8F%92%E4%BB%B6)
 
 ## 参考文档
 * [《Kubernetes Handbook》](https://jimmysong.io/kubernetes-handbook/)  
