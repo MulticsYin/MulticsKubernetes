@@ -401,3 +401,8 @@ cp *.pem /etc/kubernetes/ssl
 + [Client Certificates V/s Server Certificates](https://blogs.msdn.microsoft.com/kaushal/2012/02/17/client-certificates-vs-server-certificates/)
 + [数字证书及 CA 的扫盲介绍](http://blog.jobbole.com/104919/)
 + [TLS bootstrap 引导程序](../guide/tls-bootstrapping.md)
+
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[安装kubectl命令行工具](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/003-kubectl-installation.md#%E5%AE%89%E8%A3%85kubectl%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7)**
