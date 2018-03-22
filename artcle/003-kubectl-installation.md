@@ -44,3 +44,6 @@ kubectl config use-context kubernetes
 
 - [kubectl命令概览](../guide/using-kubectl.md)
 - [kubectl命令技巧大全](../guide/kubectl-cheatsheet.md)
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[创建 kubeconfig 文件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/004-create-kubeconfig.md#%E5%88%9B%E5%BB%BA-kubeconfig-%E6%96%87%E4%BB%B6)**
