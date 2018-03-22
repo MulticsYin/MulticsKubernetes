@@ -111,3 +111,7 @@ cp bootstrap.kubeconfig kube-proxy.kubeconfig /etc/kubernetes/
 ## 参考
 
 关于 kubeconfig 文件的更多信息请参考 [使用 kubeconfig 文件配置跨集群认证](../guide/authenticate-across-clusters-kubeconfig.md)。
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[创建高可用 etcd 集群](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/005-etcd-cluster-installation.md#%E5%88%9B%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8-etcd-%E9%9B%86%E7%BE%A4)**
