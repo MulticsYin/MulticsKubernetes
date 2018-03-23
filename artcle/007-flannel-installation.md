@@ -109,3 +109,7 @@ $etcdctl get /kube-centos/network/subnets/172.30.46.0-24
 ```
 
 如果可以查看到以上内容证明flannel已经安装完成，下一步是在node节点上安装和配置docker、kubelet、kube-proxy等，请参考下一节[部署node节点](node-installation.md)。
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[部署node节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/008-node-installation.md#%E9%83%A8%E7%BD%B2node%E8%8A%82%E7%82%B9)**
