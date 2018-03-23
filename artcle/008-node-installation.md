@@ -395,3 +395,8 @@ Commercial support is available at
 ## 参考
 
 [Kubelet 的认证授权](../guide/kubelet-authentication-authorization.md)
+
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[安装kubedns插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/009-kubedns-addon-installation.md#%E5%AE%89%E8%A3%85kubedns%E6%8F%92%E4%BB%B6)**
