@@ -302,3 +302,7 @@ etcd-0               Healthy   {"health": "true"}
 etcd-1               Healthy   {"health": "true"}   
 etcd-2               Healthy   {"health": "true"}   
 ```
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[安装flannel网络插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/007-flannel-installation.md#%E5%AE%89%E8%A3%85flannel%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6)**
