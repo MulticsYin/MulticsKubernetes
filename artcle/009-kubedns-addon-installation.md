@@ -189,3 +189,6 @@ PING kube-dns.kube-system.svc.cluster.local (10.254.0.2): 56 data bytes
 从结果来看，service名称可以正常解析。
 
 **注意**：直接ping ClusterIP是ping不通的，ClusterIP是根据**IPtables**路由到服务的endpoint上，只有结合ClusterIP加端口才能访问到对应的服务。
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[安装dashboard插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/010-dashboard-addon-installation.md#%E5%AE%89%E8%A3%85dashboard%E6%8F%92%E4%BB%B6)**
