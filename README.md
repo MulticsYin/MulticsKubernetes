@@ -1,7 +1,7 @@
 # MulticsKubernetes
 
 该教程记录我安装及使用Kubernetes的历程，主要偏向实战，基础知识请查看参考文档，文档共分为三个部分:  
-* Kubernetes 安装 & 插件配置
+* Kubernetes 二进制部署 & 插件配置
 * 官方实例、社区实例及自己开发部署实例
 * Kubernetes 架构 & 源码剖析
 
