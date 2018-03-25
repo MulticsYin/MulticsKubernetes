@@ -216,3 +216,8 @@ monitoring-influxdb    10.254.22.46    <nodes>       8086:32299/TCP,8083:30269/T
 ## 参考
 
 [使用Heapster获取集群对象的metric数据](../practice/using-heapster-to-get-object-metrics.md)
+
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
+**[安装EFK插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/012-efk-addon-installation.md#%E5%AE%89%E8%A3%85efk%E6%8F%92%E4%BB%B6)**
