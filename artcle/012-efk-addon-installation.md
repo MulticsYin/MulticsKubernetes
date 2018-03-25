@@ -159,3 +159,7 @@ server.basePath: /api/v1/proxy/namespaces/kube-system/services/kibana-logging
 创建Index后，可以在 `Discover` 下看到 ElasticSearch logging 中汇聚的日志；
 
 ![es-home](../images/kubernetes-efk-kibana.jpg)
+
+
+
+**[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**
