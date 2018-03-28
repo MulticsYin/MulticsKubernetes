@@ -3,8 +3,6 @@
 
 **注意**：这一步是在安装配置kubernetes的所有步骤中最容易出错也最难于排查问题的一步，而这却刚好是第一步，万事开头难，不要因为这点困难就望而却步。
 
-**如果您足够有信心在完全不了解自己在做什么的情况下能够成功地完成了这一步的配置，那么您可以尽管跳过上面的几篇文章直接进行下面的操作。**
-
 `kubernetes` 系统的各组件需要使用 `TLS` 证书对通信进行加密，本文档使用 `CloudFlare` 的 PKI 工具集 [cfssl](https://github.com/cloudflare/cfssl) 来生成 Certificate Authority (CA) 和其它证书；
 
 **生成的 CA 证书和秘钥文件如下：**
@@ -27,7 +25,7 @@
 + kubectl：使用 ca.pem、admin-key.pem、admin.pem；
 + kube-controller-manager：使用 ca-key.pem、ca.pem
 
-**注意：以下操作都在 master 节点即 172.20.0.113 这台主机上执行，证书只需要创建一次即可，以后在向集群中添加新节点时只要将 /etc/kubernetes/ 目录下的证书拷贝到新节点上即可。**
+**注意：以下操作都在 master 节点即 192.168.177.132 这台主机上执行，证书只需要创建一次即可，以后在向集群中添加新节点时只要将 /etc/kubernetes/ 目录下的证书拷贝到新节点上即可。**
 
 ## 安装 `CFSSL`
 
@@ -46,14 +44,14 @@ wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
 chmod +x cfssl-certinfo_linux-amd64
 mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo
 ```
-查看环境变量，如果没有`/usr/local/bin`，则将以下语句添加到`/etc/profile`中。
+查看环境变量`$PATH`，如果没有`/usr/local/bin`，则将以下语句添加到`/etc/profile`中。
 ```
 export PATH=/usr/local/bin:$PATH
 ```
 
 **方式二：使用go命令安装**
 
-如果、系统中安装了Go1.7.5，使用以下命令安装更快捷：
+如果系统中安装了Go语言环境，使用以下命令安装更快捷：
 
 ```bash
 $ go get -u github.com/cloudflare/cfssl/cmd/...
@@ -190,7 +188,7 @@ kubernetes.csr  kubernetes-csr.json  kubernetes-key.pem  kubernetes.pem
 或者直接在命令行上指定相关参数：
 
 ``` bash
-echo '{"CN":"kubernetes","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes -hostname="127.0.0.1,172.20.0.112,172.20.0.113,172.20.0.114,172.20.0.115,kubernetes,kubernetes.default" - | cfssljson -bare kubernetes
+echo '{"CN":"kubernetes","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes -hostname="127.0.0.1,192.168.177.132,192.168.177.133,192.168.177.134,192.168.177.135,kubernetes,kubernetes.default" - | cfssljson -bare kubernetes
 ```
 
 ## 创建 admin 证书
@@ -387,22 +385,13 @@ $ cfssl-certinfo -cert kubernetes.pem
 
 ## 分发证书
 
-将生成的证书和秘钥文件（后缀名为`.pem`）拷贝到所有机器的 `/etc/kubernetes/ssl` 目录下备用；
+将生成的证书和秘钥文件（后缀名为`.pem`）拷贝到集群所有机器的 `/etc/kubernetes/ssl` 目录下备用；
 
 ``` bash
 mkdir -p /etc/kubernetes/ssl
 cp *.pem /etc/kubernetes/ssl
 ```
 
-## 参考
-
-+ [Generate self-signed certificates](https://coreos.com/os/docs/latest/generate-self-signed-certificates.html)
-+ [Setting up a Certificate Authority and Creating TLS Certificates](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/02-certificate-authority.md)
-+ [Client Certificates V/s Server Certificates](https://blogs.msdn.microsoft.com/kaushal/2012/02/17/client-certificates-vs-server-certificates/)
-+ [数字证书及 CA 的扫盲介绍](http://blog.jobbole.com/104919/)
-+ [TLS bootstrap 引导程序](../guide/tls-bootstrapping.md)
-
-
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[安装kubectl命令行工具](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/003-kubectl-installation.md#%E5%AE%89%E8%A3%85kubectl%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7)**
+**[下一章 - 安装kubectl命令行工具](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/003-kubectl-installation.md#%E5%AE%89%E8%A3%85kubectl%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7)**
