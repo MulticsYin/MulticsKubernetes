@@ -34,7 +34,7 @@ admin-key.pem  admin.pem  ca-key.pem  ca.pem  kube-proxy-key.pem  kube-proxy.pem
 从 [github release 页面](https://github.com/kubernetes/kubernetes/releases) 下载发布版 tarball，解压后再执行下载脚本
 
 ``` bash
-wget https://github.com/kubernetes/kubernetes/releases/download/v1.6.0/kubernetes.tar.gz
+wget https://dl.k8s.io/v1.9.5/kubernetes-server-linux-amd64.tar.gz
 tar -xzvf kubernetes.tar.gz
 cd kubernetes
 ./cluster/get-kube-binaries.sh
@@ -116,7 +116,7 @@ KUBE_LOG_LEVEL="--v=0"
 KUBE_ALLOW_PRIV="--allow-privileged=true"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-KUBE_MASTER="--master=http://172.16.239.128:8080"
+KUBE_MASTER="--master=http://192.168.177.132:8080"
 ```
 
 该配置文件同时被kube-apiserver、kube-controller-manager、kube-scheduler、kubelet、kube-proxy使用。
@@ -132,7 +132,7 @@ apiserver配置文件`/etc/kubernetes/apiserver`内容为：
 #
 ## The address on the local server to listen to.
 #KUBE_API_ADDRESS="--insecure-bind-address=sz-pg-oam-docker-test-001.tendcloud.com"
-KUBE_API_ADDRESS="--advertise-address=172.16.239.128 --bind-address=172.16.239.128 --insecure-bind-address=172.16.239.128"
+KUBE_API_ADDRESS="--advertise-address=192.168.177.132 --bind-address=192.168.177.132 --insecure-bind-address=192.168.177.132"
 #
 ## The port on the local server to listen on.
 #KUBE_API_PORT="--port=8080"
@@ -141,7 +141,7 @@ KUBE_API_ADDRESS="--advertise-address=172.16.239.128 --bind-address=172.16.239.1
 #KUBELET_PORT="--kubelet-port=10250"
 #
 ## Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd-servers=https://172.16.239.128:2379,https://172.16.239.129:2379,https://172.16.239.130:2379"
+KUBE_ETCD_SERVERS="--etcd-servers=https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379"
 #
 ## Address range to use for services
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
@@ -305,4 +305,4 @@ etcd-2               Healthy   {"health": "true"}
 
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[安装flannel网络插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/007-flannel-installation.md#%E5%AE%89%E8%A3%85flannel%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6)**
+**[下一章 - 安装flannel网络插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/007-flannel-installation.md#%E5%AE%89%E8%A3%85flannel%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6)**
