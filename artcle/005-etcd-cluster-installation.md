@@ -129,4 +129,4 @@ cluster is healthy
 
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[部署master节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/006-master-installation.md#%E9%83%A8%E7%BD%B2master%E8%8A%82%E7%82%B9)**
+**[下一章 - 部署master节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/006-master-installation.md#%E9%83%A8%E7%BD%B2master%E8%8A%82%E7%82%B9)**
