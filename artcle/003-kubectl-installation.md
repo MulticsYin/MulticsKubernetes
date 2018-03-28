@@ -4,19 +4,19 @@
 
 ## 下载 kubectl
 
-注意请下载对应的Kubernetes版本的安装包。
+注意请下载对应的Kubernetes版本的安装包，推荐直接下载`server`包，上面有安装集群的所有`kubernetes`二进制文件。
 
 ``` bash
-wget https://dl.k8s.io/v1.6.0/kubernetes-client-linux-amd64.tar.gz
-tar -xzvf kubernetes-client-linux-amd64.tar.gz
-cp kubernetes/client/bin/kube* /usr/bin/
+wget https://dl.k8s.io/v1.9.3/kubernetes-server-linux-amd64.tar.gz
+tar -xzvf kubernetes-server-linux-amd64.tar.gz
+cp kubernetes/server/bin/kubectl /usr/local/bin/
 chmod a+x /usr/bin/kube*
 ```
 
 ## 创建 kubectl kubeconfig 文件
 
 ``` bash
-export KUBE_APISERVER="https://172.20.0.113:6443"
+export KUBE_APISERVER="https://192.168.177.132:6443"
 # 设置集群参数
 kubectl config set-cluster kubernetes \
   --certificate-authority=/etc/kubernetes/ssl/ca.pem \
@@ -40,10 +40,6 @@ kubectl config use-context kubernetes
 
 **注意：**`~/.kube/config`文件拥有对该集群的最高权限，请妥善保管。
 
-## 更多资料
-
-- [kubectl命令概览](../guide/using-kubectl.md)
-- [kubectl命令技巧大全](../guide/kubectl-cheatsheet.md)
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[创建 kubeconfig 文件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/004-create-kubeconfig.md#%E5%88%9B%E5%BB%BA-kubeconfig-%E6%96%87%E4%BB%B6)**
+**[下一章 - 创建 kubeconfig 文件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/004-create-kubeconfig.md#%E5%88%9B%E5%BB%BA-kubeconfig-%E6%96%87%E4%BB%B6)**
