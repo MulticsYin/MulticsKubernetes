@@ -1,7 +1,7 @@
 # 系统初始化配置
 
 ## 安装基本工具
-安装VMware虚拟机，从中模拟三台主机，分别安装 Ubuntu16.04 server版本
+安装VMware虚拟机，从中模拟三台主机，分别安装 Ubuntu16.04 server版本，安装完成以后运行以下命令安装基本工具和软件：
 ```bash
 sudo apt-get install -y openssh-server vim git htop
 ```
