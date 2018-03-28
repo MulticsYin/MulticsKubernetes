@@ -2,10 +2,14 @@
 
 所有的node节点都需要安装网络插件才能让所有的Pod加入到同一个局域网中，本文是安装flannel网络插件的参考文档。
 
-建议直接使用yum安装flanneld，除非对版本有特殊需求，默认安装的是0.7.1版本的flannel。
+直接使用二进制安装flanneld，在此安装的是0.10.0版本的flannel。
 
+下载flannel二进制版本：
 ```bash
-yum install -y flannel
+$ wget https://github.com/coreos/flannel/releases/download/v0.10.0/flannel-v0.10.0-linux-amd64.tar.gz
+$ tar -zxvf flannel-v0.10.0-linux-amd64.tar.gz
+$ cd flannel-v0.10.0-linux-amd64
+$ mv flanneld  mk-docker-opts.sh /usr/local/bin
 ```
 
 service配置文件`/usr/lib/systemd/system/flanneld.service`。
@@ -41,7 +45,7 @@ RequiredBy=docker.service
 # Flanneld configuration options  
 
 # etcd url location.  Point this to the server where etcd runs
-FLANNEL_ETCD_ENDPOINTS="https://172.20.0.113:2379,https://172.20.0.114:2379,https://172.20.0.115:2379"
+FLANNEL_ETCD_ENDPOINTS="https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379"
 
 # etcd config key.  This is the configuration key that flannel queries
 # For address range assignment
@@ -58,12 +62,13 @@ FLANNEL_OPTIONS="-etcd-cafile=/etc/kubernetes/ssl/ca.pem -etcd-certfile=/etc/kub
 执行下面的命令为docker分配IP地址段。
 
 ```bash
-etcdctl --endpoints=https://172.20.0.113:2379,https://172.20.0.114:2379,https://172.20.0.115:2379 \
+etcdctl --endpoints=https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379 \
   --ca-file=/etc/kubernetes/ssl/ca.pem \
   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
   mkdir /kube-centos/network
-etcdctl --endpoints=https://172.20.0.113:2379,https://172.20.0.114:2379,https://172.20.0.115:2379 \
+  
+etcdctl --endpoints=https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379 \
   --ca-file=/etc/kubernetes/ssl/ca.pem \
   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
@@ -72,9 +77,7 @@ etcdctl --endpoints=https://172.20.0.113:2379,https://172.20.0.114:2379,https://
 
 如果你要使用`host-gw`模式，可以直接将vxlan改成`host-gw`即可。
 
-**注**：参考[网络和集群性能测试](network-and-cluster-perfermance-test.md)那节，最终我们使用的`host-gw`模式，关于flannel支持的backend模式见：<https://github.com/coreos/flannel/blob/master/Documentation/backends.md>。
-
-**启动flannel**
+**启动flannel**再次
 
 ```bash
 systemctl daemon-reload
@@ -86,42 +89,42 @@ systemctl status flanneld
 现在查询etcd中的内容可以看到：
 
 ```bash
-$etcdctl --endpoints=${ETCD_ENDPOINTS} \
-  --ca-file=/etc/kubernetes/ssl/ca.pem \
-  --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
-  --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  ls /kube-centos/network/subnets
-/kube-centos/network/subnets/172.30.14.0-24
-/kube-centos/network/subnets/172.30.38.0-24
-/kube-centos/network/subnets/172.30.46.0-24
+root@master:~# etcdctl --endpoints=${ETCD_ENDPOINTS} \
+   --ca-file=/etc/kubernetes/ssl/ca.pem \
+   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
+   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
+   ls /kube-centos/network/subnets
+/kube-centos/network/subnets/172.30.27.0-24
+/kube-centos/network/subnets/172.30.94.0-24
+/kube-centos/network/subnets/172.30.90.0-24
 
-$etcdctl --endpoints=${ETCD_ENDPOINTS} \
-  --ca-file=/etc/kubernetes/ssl/ca.pem \
-  --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
-  --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  get /kube-centos/network/config
-{ "Network": "172.30.0.0/16", "SubnetLen": 24, "Backend": { "Type": "vxlan" } }
+root@master:~# etcdctl --endpoints=${ETCD_ENDPOINTS} \
+   --ca-file=/etc/kubernetes/ssl/ca.pem \
+   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
+   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
+   get /kube-centos/network/config
+{"Network":"172.30.0.0/16","SubnetLen":24,"Backend":{"Type":"vxlan"}}
 
-$etcdctl --endpoints=${ETCD_ENDPOINTS} \
-  --ca-file=/etc/kubernetes/ssl/ca.pem \
-  --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
-  --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  get /kube-centos/network/subnets/172.30.14.0-24
-{"PublicIP":"172.20.0.114","BackendType":"vxlan","BackendData":{"VtepMAC":"56:27:7d:1c:08:22"}}
+root@master:~# etcdctl --endpoints=${ETCD_ENDPOINTS} \
+   --ca-file=/etc/kubernetes/ssl/ca.pem \
+   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
+   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
+   get /kube-centos/network/subnets/172.30.27.0-24
+{"PublicIP":"192.168.177.130","BackendType":"vxlan","BackendData":{"VtepMAC":"42:66:0d:7a:73:e6"}}
 
-$etcdctl --endpoints=${ETCD_ENDPOINTS} \
+$ etcdctl --endpoints=${ETCD_ENDPOINTS} \
   --ca-file=/etc/kubernetes/ssl/ca.pem \
   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  get /kube-centos/network/subnets/172.30.38.0-24
-{"PublicIP":"172.20.0.115","BackendType":"vxlan","BackendData":{"VtepMAC":"12:82:83:59:cf:b8"}}
+  get /kube-centos/network/subnets/172.30.94.0-24
+{"PublicIP":"192.168.177.128","BackendType":"vxlan","BackendData":{"VtepMAC":"2a:bf:cb:54:c3:42"}}
 
-$etcdctl --endpoints=${ETCD_ENDPOINTS} \
+$ etcdctl --endpoints=${ETCD_ENDPOINTS} \
   --ca-file=/etc/kubernetes/ssl/ca.pem \
   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  get /kube-centos/network/subnets/172.30.46.0-24
-{"PublicIP":"172.20.0.113","BackendType":"vxlan","BackendData":{"VtepMAC":"e6:b2:fd:f6:66:96"}}
+  /kube-centos/network/subnets/172.30.90.0-24
+{"PublicIP":"192.168.177.129","BackendType":"vxlan","BackendData":{"VtepMAC":"7e:47:e0:27:01:c7"}}
 ```
 
 推荐在“.bashrc” 文件中写入如下设置，以后操作`etcd`就不用输入那么长的一串字符了：
@@ -129,8 +132,6 @@ $etcdctl --endpoints=${ETCD_ENDPOINTS} \
 alias etcdctl='etcdctl --endpoints=${ETCD_ENDPOINTS} --ca-file=/etc/kubernetes/ssl/ca.pem  --cert-file=/etc/kubernetes/ssl/kubernetes.pem --key-file=/etc/kubernetes/ssl/kubernetes-key.pem'
 ```
 
-如果可以查看到以上内容证明flannel已经安装完成，下一步是在node节点上安装和配置docker、kubelet、kube-proxy等，请参考下一节[部署node节点](node-installation.md)。
-
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[部署node节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/008-node-installation.md#%E9%83%A8%E7%BD%B2node%E8%8A%82%E7%82%B9)**
+**[下一章 - 部署node节点](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/008-node-installation.md#%E9%83%A8%E7%BD%B2node%E8%8A%82%E7%82%B9)**
