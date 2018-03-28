@@ -1,12 +1,10 @@
 # 创建 kubeconfig 文件
 
-注意：请先参考 [安装kubectl命令行工具](kubectl-installation.md)，先在 master 节点上安装 kubectl 然后再进行下面的操作。
-
 `kubelet`、`kube-proxy` 等 Node 机器上的进程与 Master 机器的 `kube-apiserver` 进程通信时需要认证和授权；
 
 kubernetes 1.4 开始支持由 `kube-apiserver` 为客户端生成 TLS 证书的 [TLS Bootstrapping](https://kubernetes.io/docs/admin/kubelet-tls-bootstrapping/) 功能，这样就不需要为每个客户端生成证书了；该功能**当前仅支持为 `kubelet`** 生成证书；
 
-因为我的master节点和node节点复用，所有在这一步其实已经安装了kubectl。参考[安装kubectl命令行工具](kubectl-installation.md)。
+因为我的master节点和node节点复用，所有在这一步其实已经安装了kubectl。
 
 以下操作只需要在master节点上执行，生成的`*.kubeconfig`文件可以直接拷贝到node节点的`/etc/kubernetes`目录下。
 
@@ -40,11 +38,11 @@ cp token.csv /etc/kubernetes/
 
 ## 创建 kubelet bootstrapping kubeconfig 文件
 
-执行下面的命令时需要先安装kubectl命令，请参考[安装kubectl命令行工具](kubectl-installation.md)。
+执行下面的命令时需要先安装kubectl命令。
 
 ``` bash
 cd /etc/kubernetes
-export KUBE_APISERVER="https://172.20.0.113:6443"
+export KUBE_APISERVER="https://192.168.177.132:6443"
 
 # 设置集群参数
 kubectl config set-cluster kubernetes \
@@ -75,7 +73,7 @@ kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
 ## 创建 kube-proxy kubeconfig 文件
 
 ``` bash
-export KUBE_APISERVER="https://172.20.0.113:6443"
+export KUBE_APISERVER="https://192.168.177.132:6443"
 # 设置集群参数
 kubectl config set-cluster kubernetes \
   --certificate-authority=/etc/kubernetes/ssl/ca.pem \
@@ -108,9 +106,6 @@ kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
 ``` bash
 cp bootstrap.kubeconfig kube-proxy.kubeconfig /etc/kubernetes/
 ```
-## 参考
-
-关于 kubeconfig 文件的更多信息请参考 [使用 kubeconfig 文件配置跨集群认证](../guide/authenticate-across-clusters-kubeconfig.md)。
 
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
