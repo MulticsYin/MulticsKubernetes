@@ -74,10 +74,11 @@ Mar 31 16:44:41 sz-pg-oam-docker-test-002.tendcloud.com kubelet[81047]: error: f
 这是kubelet与docker的**cgroup driver**不一致导致的，kubelet启动的时候有个`—cgroup-driver`参数可以指定为"cgroupfs"或者“systemd”。
 
 ```bash
---cgroup-driver string                                    Driver that the kubelet uses to manipulate cgroups on the host.  Possible values: 'cgroupfs', 'systemd' (default "cgroupfs")
+--cgroup-driver string		Driver that the kubelet uses to manipulate cgroups on the host.  Possible values: 'cgroupfs', 'systemd' (default "cgroupfs")
 ```
 
-配置docker的service配置文件`/usr/lib/systemd/system/docker.service`，设置`ExecStart`中的`--exec-opt native.cgroupdriver=systemd`。
+配置docker的service配置文件`/lib/systemd/system/docker.service`  
+设置`ExecStart`中的`--exec-opt native.cgroupdriver=systemd`。
 
 ## 安装和配置kubelet
 
