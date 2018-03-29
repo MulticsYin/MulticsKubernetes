@@ -68,7 +68,7 @@ EnvironmentFile=-/etc/sysconfig/docker-network
 重启了docker后还要重启kubelet，这时又遇到问题，kubelet启动失败。报错：
 
 ```bash
-Mar 31 16:44:41 sz-pg-oam-docker-test-002.tendcloud.com kubelet[81047]: error: failed to run Kubelet: failed to create kubelet: misconfiguration: kubelet cgroup driver: "cgroupfs" is different from docker cgroup driver: "systemd"
+Mar 31 16:44:41 master kubelet[81047]: error: failed to run Kubelet: failed to create kubelet: misconfiguration: kubelet cgroup driver: "cgroupfs" is different from docker cgroup driver: "systemd"
 ```
 
 这是kubelet与docker的**cgroup driver**不一致导致的，kubelet启动的时候有个`—cgroup-driver`参数可以指定为"cgroupfs"或者“systemd”。
