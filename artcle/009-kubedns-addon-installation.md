@@ -4,24 +4,10 @@
 
 该插件直接使用kubernetes部署，官方的配置文件中包含以下镜像：
 
-    gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.1
-    gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.1
-    gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.1
-我clone了上述镜像，上传到我的私有镜像仓库：
+    gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.8
+    gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.8
+    gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.8
 
-```
-sz-pg-oam-docker-hub-001.tendcloud.com/library/k8s-dns-dnsmasq-nanny-amd64:1.14.1
-sz-pg-oam-docker-hub-001.tendcloud.com/library/k8s-dns-kube-dns-amd64:1.14.1
-sz-pg-oam-docker-hub-001.tendcloud.com/library/k8s-dns-sidecar-amd64:1.14.1
-```
-
-同时上传了一份到时速云备份：
-
-```
-index.tenxcloud.com/jimmy/k8s-dns-dnsmasq-nanny-amd64:1.14.1
-index.tenxcloud.com/jimmy/k8s-dns-kube-dns-amd64:1.14.1
-index.tenxcloud.com/jimmy/k8s-dns-sidecar-amd64:1.14.1
-```
 
 以下yaml配置文件中使用的是私有镜像仓库中的镜像。
 
@@ -32,7 +18,6 @@ kubedns-controller.yaml
 kubedns-svc.yaml
 ```
 
-已经修改好的 yaml 文件见：[../manifests/kubedns](https://github.com/rootsongjc/kubernetes-handbook/blob/master/manifests/kubedns)
 
 ## 系统预定义的 RoleBinding
 
@@ -84,10 +69,6 @@ $ diff kubedns-svc.yaml.base kubedns-svc.yaml
 
 ``` bash
 $ diff kubedns-controller.yaml.base kubedns-controller.yaml
-58c58
-<         image: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.1
----
->         image: sz-pg-oam-docker-hub-001.tendcloud.com/library/k8s-dns-kube-dns-amd64:v1.14.1
 88c88
 <         - --domain=__PILLAR__DNS__DOMAIN__.
 ---
@@ -96,18 +77,10 @@ $ diff kubedns-controller.yaml.base kubedns-controller.yaml
 <         __PILLAR__FEDERATIONS__DOMAIN__MAP__
 ---
 >         #__PILLAR__FEDERATIONS__DOMAIN__MAP__
-110c110
-<         image: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.1
----
->         image: sz-pg-oam-docker-hub-001.tendcloud.com/library/k8s-dns-dnsmasq-nanny-amd64:v1.14.1
 129c129
 <         - --server=/__PILLAR__DNS__DOMAIN__/127.0.0.1#10053
 ---
 >         - --server=/cluster.local./127.0.0.1#10053
-148c148
-<         image: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.1
----
->         image: sz-pg-oam-docker-hub-001.tendcloud.com/library/k8s-dns-sidecar-amd64:v1.14.1
 161,162c161,162
 <         - --probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.__PILLAR__DNS__DOMAIN__,5,A
 <         - --probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.__PILLAR__DNS__DOMAIN__,5,A
@@ -147,7 +120,7 @@ spec:
     spec:
       containers:
       - name: my-nginx
-        image: sz-pg-oam-docker-hub-001.tendcloud.com/library/nginx:1.9
+        image: nginx
         ports:
         - containerPort: 80
 $ kubectl create -f my-nginx.yaml
@@ -191,4 +164,4 @@ PING kube-dns.kube-system.svc.cluster.local (10.254.0.2): 56 data bytes
 **注意**：直接ping ClusterIP是ping不通的，ClusterIP是根据**IPtables**路由到服务的endpoint上，只有结合ClusterIP加端口才能访问到对应的服务。
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[安装dashboard插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/010-dashboard-addon-installation.md#%E5%AE%89%E8%A3%85dashboard%E6%8F%92%E4%BB%B6)**
+**[下一章 - 安装dashboard插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/010-dashboard-addon-installation.md#%E5%AE%89%E8%A3%85dashboard%E6%8F%92%E4%BB%B6)**
