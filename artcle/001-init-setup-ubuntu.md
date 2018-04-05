@@ -12,11 +12,11 @@ sudo apt-get install -y openssh-server vim git htop
 * 修改`/etc/hosts`文件对应主机名和IP。
 * 设置`root`密码:  
 `sudo passwd root`。
-* 设置`root`登录(节省时间，生产环境推荐严格按照要求来)  
+* 设置`root`登录  
 修改`/etc/ssh/sshd_config`文件，找到`PermitRootLogin prohibit-password`一行，改为`PermitRootLogin yes`。  
-重启 `openssh server`: `sudo systemctl restart ssh.service`
+重启 `openssh server`，运行命令: `sudo systemctl restart ssh.service`
 * 关闭`swap`  
-注释`/etc/fstab` `swap` 部分，运行以下命令暂时生效，不用重启电脑。  
+注释`/etc/fstab` 文件关于 `swap` 部分，否则后期启动`kubelet`时会报错，运行以下命令暂时生效，不用重启电脑。
 `sudo swapoff -a`
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
