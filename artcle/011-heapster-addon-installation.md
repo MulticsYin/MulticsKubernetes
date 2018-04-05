@@ -2,7 +2,7 @@
 
 ## 准备镜像
 
-官方镜像保存在 gcr.io 中需要翻墙才能下载，为了方便大家使用，我下载后放到了[时速云](http://www.tenxcloud.com)中，为公有镜像供大家下载。
+官方镜像保存在 gcr.io 中需要翻墙才能下载。
 
 - gcr.io/google-containers/heapster-amd64:v1.5.2
 - gcr.io/google-containers/heapster-influxdb-amd64:v1.3.3
@@ -13,32 +13,28 @@
 到 [heapster release 页面](https://github.com/kubernetes/heapster/releases) 下载最新版本的 heapster。
 
 ``` bash
-wget https://github.com/kubernetes/heapster/archive/v1.3.0.zip
-unzip v1.3.0.zip
-mv v1.3.0.zip heapster-1.3.0
+wget https://github.com/kubernetes/heapster/archive/v1.5.2.zip
+unzip v1.5.2.zip
+mv v1.3.0.zip heapster-1.5.2
 ```
 
-文件目录： `heapster-1.3.0/deploy/kube-config/influxdb`
+文件目录： `heapster-1.5.2/deploy/kube-config/influxdb`
 
 ``` bash
-$ cd heapster-1.3.0/deploy/kube-config/influxdb
+$ cd heapster-1.5.2/deploy/kube-config/influxdb
 $ ls *.yaml
 grafana-deployment.yaml  grafana-service.yaml  heapster-deployment.yaml  heapster-service.yaml  influxdb-deployment.yaml  influxdb-service.yaml heapster-rbac.yaml
 ```
 
 我们自己创建了heapster的rbac配置`heapster-rbac.yaml`。
 
-已经修改好的 yaml 文件见：[../manifests/heapster](https://github.com/rootsongjc/kubernetes-handbook/blob/master/manifests/heapster/)
+已经修改好的 yaml 文件见：[../examples/heapster](https://github.com/MulticsYin/MulticsKubernetes/tree/master/examples/heapster)
 
 
 ## 配置 grafana-deployment
 
 ``` bash
 $ diff grafana-deployment.yaml.orig grafana-deployment.yaml
-16c16
-<         image: gcr.io/google_containers/heapster-grafana-amd64:v4.0.2
----
->         image: sz-pg-oam-docker-hub-001.tendcloud.com/library/heapster-grafana-amd64:v4.0.2
 40,41c40,41
 <           # value: /api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
 <           value: /
@@ -52,13 +48,7 @@ $ diff grafana-deployment.yaml.orig grafana-deployment.yaml
 
 ## 配置 heapster-deployment
 
-``` bash
-$ diff heapster-deployment.yaml.orig heapster-deployment.yaml
-16c16
-<         image: gcr.io/google_containers/heapster-amd64:v1.3.0-beta.1
----
->         image: sz-pg-oam-docker-hub-001.tendcloud.com/library/heapster-amd64:v1.3.0-beta.1
-```
+除非换了镜像，否则不用修改。
 
 ## 配置 influxdb-deployment
 
@@ -84,10 +74,6 @@ $ kubectl create configmap influxdb-config --from-file=config.toml  -n kube-syst
 configmap "influxdb-config" created
 $ # 将 ConfigMap 中的配置文件挂载到 Pod 中，达到覆盖原始配置的目的
 $ diff influxdb-deployment.yaml.orig influxdb-deployment.yaml
-16c16
-<         image: gcr.io/google_containers/heapster-influxdb-amd64:v1.1.1
----
->         image: sz-pg-oam-docker-hub-001.tendcloud.com/library/heapster-influxdb-amd64:v1.1.1
 19a20,21
 >         - mountPath: /etc/
 >           name: influxdb-config
@@ -116,7 +102,7 @@ $ diff influxdb-service.yaml.orig influxdb-service.yaml
 
 ``` bash
 $ pwd
-/root/heapster-1.3.0/deploy/kube-config/influxdb
+/root/heapster-1.5.2/deploy/kube-config/influxdb
 $ ls *.yaml
 grafana-service.yaml      heapster-rbac.yaml     influxdb-cm.yaml          influxdb-service.yaml
 grafana-deployment.yaml  heapster-deployment.yaml  heapster-service.yaml  influxdb-deployment.yaml
@@ -220,4 +206,4 @@ monitoring-influxdb    10.254.22.46    <nodes>       8086:32299/TCP,8083:30269/T
 
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
-**[安装EFK插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/012-efk-addon-installation.md#%E5%AE%89%E8%A3%85efk%E6%8F%92%E4%BB%B6)**
+**[下一章 - 安装EFK插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/012-efk-addon-installation.md#%E5%AE%89%E8%A3%85efk%E6%8F%92%E4%BB%B6)**
