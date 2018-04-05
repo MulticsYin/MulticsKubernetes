@@ -141,7 +141,7 @@ monitoring-influxdb-1411048194-lzrpc    1/1       Running   0          2m
 
 检查 kubernets dashboard 界面，看是显示各 Nodes、Pods 的 CPU、内存、负载等利用率曲线图；
 
-![dashboard-heapster](../images/kubernetes-dashboard-with-heapster.jpg)
+![dashboard-heapster]()
 
 ## 访问 grafana
 
@@ -189,20 +189,15 @@ monitoring-influxdb    10.254.22.46    <nodes>       8086:32299/TCP,8083:30269/T
 
 在页面的 “Connection Settings” 的 Host 中输入 node IP， Port 中输入 8086 映射的 nodePort 如上面的 32299，点击 “Save” 即可（我的集群中的地址是172.20.0.113:32299）：
 
-![kubernetes-influxdb-heapster](../images/kubernetes-influxdb-heapster.jpg)
+![kubernetes-influxdb-heapster]()
 
 ## 注意
 
 在安装好 Grafana 之后我们使用的是默认的 template 配置，页面上的 namespace 选择里只有 `default` 和 `kube-system`，并不是说其他的 namespace 里的指标没有得到监控，只是我们没有在 Grafana 中开启他它们的显示而已。见 [Cannot see other namespaces except, kube-system and default #1279](https://github.com/kubernetes/heapster/issues/1279)。
 
-![修改grafana模板](../images/grafana-dashboard-setting.jpg)
+![修改grafana模板]()
 
 将 Templating 中的 namespace 的 Data source 设置为 influxdb-datasource，Refresh 设置为 on Dashboard Load 保存设置，刷新浏览器，即可看到其他 namespace 选项。
-
-## 参考
-
-[使用Heapster获取集群对象的metric数据](../practice/using-heapster-to-get-object-metrics.md)
-
 
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
