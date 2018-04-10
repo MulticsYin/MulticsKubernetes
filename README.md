@@ -43,6 +43,8 @@
 ## 官方实例、社区实例及自己开发部署实例
 
 ## Kubernetes 架构 & 源码剖析
+* [Kubernetes Deconstructed: Understanding Kubernetes by Breaking It Down - Carson Anderson, DOMO](https://vimeo.com/245778144/4d1d597c5e)
+[演讲PPT](http://kube-decon.carson-anderson.com/Layers/0-Intro.sozi.html)
 
 ## 参考文档
 * [《Kubernetes Handbook》](https://jimmysong.io/kubernetes-handbook/)  
