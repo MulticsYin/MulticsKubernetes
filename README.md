@@ -14,7 +14,7 @@
 * TLS 认证通信 (所有组件，如 etcd、kubernetes master 和 node)
 * RBAC 授权
 * kubelet TLS BootStrapping
-* kubedns、dashboard、heapster(influxdb、grafana)、EFK(elasticsearch、fluentd、kibana) 集群插件
+* kubedns、dashboard、heapster(influxdb、grafana)、EFK(Elasticsearch、fluentd、kibana) 集群插件
 
 
 ## 环境说明
@@ -41,6 +41,7 @@
 * [安装EFK插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/012-efk-addon-installation.md#%E5%AE%89%E8%A3%85efk%E6%8F%92%E4%BB%B6)
 
 ## 官方实例、社区实例及自己开发部署实例
+* [Kubernetes 官方实例](https://github.com/kubernetes/examples)
 
 ## Kubernetes 架构 & 源码剖析
 * [Kubernetes Deconstructed: Understanding Kubernetes by Breaking It Down - Carson Anderson, DOMO](https://vimeo.com/245778144/4d1d597c5e)(**视频**)  
