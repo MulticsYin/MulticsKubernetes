@@ -48,9 +48,9 @@
 需自备梯子观看，能对Kubernetes有一个大体的认知。[在线PPT演示](http://kube-decon.carson-anderson.com/Layers/0-Intro.sozi.html)
 
 ## 参考文档
-* [《Kubernetes Handbook》](https://jimmysong.io/kubernetes-handbook/)  原书基于CentOS部署，与Ubuntu部署有部分差异，文档第一部分主要参考该书。
+* [Kubernetes Handbook](https://jimmysong.io/kubernetes-handbook/)  原书基于CentOS部署，与Ubuntu部署有部分差异，文档第一部分主要参考该书。
 * [Kubernetes1.9 官方文档(中文)](https://k8smeetup.github.io/)
-* [《每天5分钟玩转Kubernetes&Docker》](http://www.cnblogs.com/CloudMan6/tag/Docker/default.html)
+* [每天5分钟玩转Kubernetes&Docker](http://www.cnblogs.com/CloudMan6/tag/Docker/default.html)  入门首选
 * [kubernetes 从入门到实践](https://www.kancloud.cn/huyipow/kubernetes/531982)  51cto kubernetes 培训，具体可看视频[【Kubernetes精品培训】Kubernetes实战培训](http://edu.51cto.com/course/11386.html)
 * [以优雅的姿势监控kubernetes 集群服务(Prometheus)](https://www.kancloud.cn/huyipow/prometheus/527093)
 * [从零开始写一个运行在Kubernetes上的服务程序(中文)](https://mp.weixin.qq.com/s?__biz=MzA5OTAyNzQ2OA==&mid=2649696211&idx=1&sn=4357517ee2f85109d1ba5850dbc2566d&chksm=889318b0bfe491a6be37fc14d21b17b84bc2ea66abc20ef895e2529f5b74e7bec5260ff64422&mpshare=1&scene=1&srcid=1222tsbWehxtACFF3vdXe43p&pass_ticket=Ve1GjgUuO3ZbG6Q%2FlsmHJjFSBovqz9HQDqm9H0EuXcr12yI7f7h0eN%2B%2Fj90iafRi#rd) -- [英文原地址](https://blog.gopheracademy.com/advent-2017/kubernetes-ready-service/) -- [GitHub](https://github.com/rumyantseva/advent-2017/tree/all-steps)
