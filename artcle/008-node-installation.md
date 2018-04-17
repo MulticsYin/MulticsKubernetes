@@ -62,6 +62,7 @@ EnvironmentFile=-/etc/sysconfig/docker
 EnvironmentFile=-/etc/sysconfig/docker-storage
 EnvironmentFile=-/etc/sysconfig/docker-network
 ```
+在`ExecStart`后面添加选项`--registry-mirror=https://registry.docker-cn.com`（配置加速器）。
 
 ### 启动docker
 
@@ -77,8 +78,8 @@ Mar 31 16:44:41 master kubelet[81047]: error: failed to run Kubelet: failed to c
 --cgroup-driver string		Driver that the kubelet uses to manipulate cgroups on the host.  Possible values: 'cgroupfs', 'systemd' (default "cgroupfs")
 ```
 
-配置docker的service配置文件`/lib/systemd/system/docker.service`  
-设置`ExecStart`中的`--exec-opt native.cgroupdriver=systemd`。
+配置docker的service配置文件`/lib/systemd/system/docker.service`  
+在`ExecStart`后面添加选项`--exec-opt native.cgroupdriver=systemd`。
 
 ## 安装和配置kubelet
 
