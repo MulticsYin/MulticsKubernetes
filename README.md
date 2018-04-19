@@ -5,8 +5,8 @@
 * 官方实例、社区实例及自己开发部署实例
 * Kubernetes 架构 & 源码剖析  
 
-**Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己的网站上，这对国内的同学可能是个不小的障碍。  
-建议是：网络障碍都必须想办法克服，不然连 Kubernetes 的门都进不了。**
+Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己的网站上，这对国内的同学可能是个不小的障碍。  
+建议是：网络障碍都必须想办法克服，不然连 Kubernetes 的门都进不了。
 ## 集群详情
 * OS: Ubuntu 16.04.4 LTS xenial(查看命令：lsb_release  -a)
 * Kubernetes:[kubernetes1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#server-binaries-1)
