@@ -42,7 +42,7 @@ Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己�
 * [安装heapster插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/011-heapster-addon-installation.md#%E5%AE%89%E8%A3%85heapster%E6%8F%92%E4%BB%B6)
 * [安装EFK插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/012-efk-addon-installation.md#%E5%AE%89%E8%A3%85efk%E6%8F%92%E4%BB%B6)
 
-## 官方实例、社区实例及自己开发部署实例
+## 官方实例 & 社区实例 & 自己开发部署实例
 * [Kubernetes 官方实例](https://github.com/kubernetes/examples)
 
 ## Kubernetes 架构 & 源码剖析
