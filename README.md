@@ -47,7 +47,7 @@ Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己�
 
 ## Kubernetes 架构 & 源码剖析
 * [Kubernetes Deconstructed: Understanding Kubernetes by Breaking It Down - Carson Anderson, DOMO](https://vimeo.com/245778144/4d1d597c5e)(**视频**)  
-需自备梯子观看，能对Kubernetes有一个大体的认知。[在线PPT演示](http://kube-decon.carson-anderson.com/Layers/0-Intro.sozi.html)
+需自备梯子观看，从User,Cluster,Network,Cloud,Linux,Power等方面讲解，能对Kubernetes使用有一个大体的认知。[在线PPT演示](http://kube-decon.carson-anderson.com/Layers/0-Intro.sozi.html)
 
 ## 参考文档
 * [Kubernetes Handbook](https://jimmysong.io/kubernetes-handbook/)  原书基于CentOS部署，与Ubuntu部署有部分差异，文档第一部分主要参考该书。
