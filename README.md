@@ -50,7 +50,7 @@ Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己�
 需自备梯子观看，从User,Cluster,Network,Cloud,Linux,Power等方面讲解，能对Kubernetes使用有大体的认知。[PPT演示](http://kube-decon.carson-anderson.com/Layers/0-Intro.sozi.html)
 
 ## 参考文档
-* [Kubernetes Handbook](https://jimmysong.io/kubernetes-handbook/)  原书基于CentOS部署，与Ubuntu部署有部分差异，文档第一部分主要参考该书。
+* [Kubernetes Handbook](https://jimmysong.io/kubernetes-handbook/)  原书基于CentOS部署，与Ubuntu部署有部分差异，**Kubernetes 二进制部署主要参考该书**。
 * [Kubernetes1.9 官方文档(中文)](https://k8smeetup.github.io/)
 * [每天5分钟玩转Kubernetes&Docker](http://www.cnblogs.com/CloudMan6/tag/Docker/default.html)  入门首选
 * [kubernetes 从入门到实践](https://www.kancloud.cn/huyipow/kubernetes/531982)  51cto kubernetes 培训，具体可看视频[【Kubernetes精品培训】Kubernetes实战培训](http://edu.51cto.com/course/11386.html)
