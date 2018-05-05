@@ -11,9 +11,6 @@ es-controller.yaml  es-service.yaml  fluentd-es-ds.yaml  kibana-controller.yaml 
 
 同样EFK服务也需要一个`efk-rbac.yaml`文件，配置serviceaccount为`efk`。
 
-已经修改好的 yaml 文件见：[../manifests/EFK](https://github.com/rootsongjc/kubernetes-handbook/blob/master/manifests/EFK)
-
-
 ## 配置 es-controller.yaml
 
 ``` bash
@@ -154,12 +151,7 @@ server.basePath: /api/v1/proxy/namespaces/kube-system/services/kibana-logging
 
 如果你在这里发现Create按钮是灰色的无法点击，且Time-filed name中没有选项，fluentd要读取`/var/log/containers/`目录下的log日志，这些日志是从`/var/lib/docker/containers/${CONTAINER_ID}/${CONTAINER_ID}-json.log`链接过来的，查看你的docker配置，`—log-dirver`需要设置为**json-file**格式，默认的可能是**journald**，参考[docker logging](https://docs.docker.com/engine/admin/logging/overview/#examples)。
 
-![es-setting](../images/es-setting.png)
-
 创建Index后，可以在 `Discover` 下看到 ElasticSearch logging 中汇聚的日志；
-
-![es-home](../images/kubernetes-efk-kibana.jpg)
-
 
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**
