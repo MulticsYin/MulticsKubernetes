@@ -29,6 +29,7 @@ Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己�
 
 
 ## Kubernetes 二进制部署
+[Kubernetes Handbook](https://jimmysong.io/kubernetes-handbook/)  原书基于CentOS部署，与Ubuntu部署有部分差异，**Kubernetes 二进制部署部分修改自该书，强烈推荐，原作者在不断的更新**
 * [系统初始化配置](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/001-init-setup-ubuntu.md#%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE)
 * [创建TLS证书和秘钥](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/002-create-tls-and-secret-key.md#%E5%88%9B%E5%BB%BAtls%E8%AF%81%E4%B9%A6%E5%92%8C%E7%A7%98%E9%92%A5)
 * [安装kubectl命令行工具](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/003-kubectl-installation.md#%E5%AE%89%E8%A3%85kubectl%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7)
