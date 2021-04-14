@@ -2,7 +2,6 @@
 
 安装VMware在这块不做详细描述,详情可以参考[官网](https://www.vmware.com/products/workstation-pro.html)
 
-## 初始化系统 & 安装基础工具
 成功安装VMware虚拟机后，在本教程中使用 Ubuntu16.04 server版本新建三台主机,如下:  
 ```
 172.16.111.100	k8s-00
