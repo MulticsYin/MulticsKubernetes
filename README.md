@@ -1,6 +1,6 @@
 # MulticsKubernetes
 
-该教程记录我安装及使用Kubernetes的历程，主要偏向实战，基础知识请查看参考文档，文档共分为三个部分:  
+该教程记录安装及使用Kubernetes，主要偏向实战，基础知识请查看参考文档，文档共分为三个部分:  
 * Kubernetes 二进制部署 & 插件配置
 * 官方实例、社区实例 & 自己开发部署实例
 * Kubernetes 架构 & 源码剖析  
@@ -9,10 +9,10 @@ Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己�
 建议是：网络障碍都必须想办法克服，不然连 Kubernetes 的门都进不了。
 ## 集群详情
 * OS: Ubuntu 16.04.4 LTS xenial(查看命令：lsb_release  -a)
-* Kubernetes:[kubernetes1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#server-binaries-1)
-* Docker: [docker-ce_17.12.1_ce-0_ubuntu_amd64.deb](https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/)
-* Etcd: [etcd-v3.3.1-linux-amd64.tar.gz](https://github.com/coreos/etcd/releases/)
-* Flannel: [flannel-v0.10.0-linux-amd64.tar.gz](https://github.com/coreos/flannel/releases)
+* Kubernetes:[Kubernetes v1.21.0](https://github.com/kubernetes/kubernetes/releases)
+* Docker: [docker-ce_18.03.1~ce-0~ubuntu_amd64.deb](https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/)
+* Etcd: [etcd-v3.4.13-linux-amd64.tar.gz](https://github.com/coreos/etcd/releases/)
+* Flannel: [flannel-v0.13.0-linux-amd64.tar.gz](https://github.com/coreos/flannel/releases)
 * TLS 认证通信 (所有组件，如 etcd、kubernetes master 和 node)
 * RBAC 授权
 * kubelet TLS BootStrapping
@@ -20,12 +20,12 @@ Kubernetes 几乎所有的安装组件和 Docker 镜像都放在 goolge 自己�
 
 
 ## 环境说明
-在未来的教程中，我将在本地计算机安装VMware虚拟机，模拟三台物理设备  
+计划在本地计算机(ubuntu 20.04)安装VMware虚拟机，模拟三台物理设备  
 角色分配如下(部署了两个集群，IP可能会有差异，后期一起改过来)：
-* Master：192.168.177.132
-* Node：192.168.177.132、192.168.177.133、192.168.177.134  
+* Master：172.16.111.100
+* Node：172.16.111.100、172.16.111.101、172.16.111.102  
 
-注意：192.168.177.132这台主机master和node复用。所有生成证书、执行kubectl命令的操作都在这台节点上执行。一旦node加入到kubernetes集群之后就不需要再登陆node节点了。
+注意：172.16.111.100这台主机master和node复用。所有生成证书、执行kubectl命令的操作都在这台节点上执行。一旦node加入到kubernetes集群之后就不需要再登陆node节点了。
 
 
 ## Kubernetes 二进制部署
