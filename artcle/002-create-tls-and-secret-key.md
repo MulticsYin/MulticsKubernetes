@@ -1,7 +1,7 @@
 # 创建TLS证书和秘钥
 
 
-**注意**：这一步是在安装配置kubernetes的所有步骤中最容易出错也最难于排查问题的一步，而这却刚好是第一步，万事开头难，不要因为这点困难就望而却步。
+**注意**：这一步是安装配置kubernetes所有步骤中最容易出错也最难于排查问题的一步，而这却刚好是第一步，万事开头难，加油~~
 
 `kubernetes` 系统的各组件需要使用 `TLS` 证书对通信进行加密，本文档使用 `CloudFlare` 的 PKI 工具集 [cfssl](https://github.com/cloudflare/cfssl) 来生成 Certificate Authority (CA) 和其它证书；
 
@@ -25,7 +25,7 @@
 + kubectl：使用 ca.pem、admin-key.pem、admin.pem；
 + kube-controller-manager：使用 ca-key.pem、ca.pem
 
-**注意：以下操作都在 master 节点即 192.168.177.132 这台主机上执行，证书只需要创建一次即可，以后在向集群中添加新节点时只要将 /etc/kubernetes/ 目录下的证书拷贝到新节点上即可。**
+**注意：以下操作都在 master 节点即 172.16.111.100 这台主机上执行，证书只需要创建一次即可，以后在向集群中添加新节点时只要将 /etc/kubernetes/ 目录下的证书拷贝到新节点上即可。**
 
 ## 安装 `CFSSL`
 
@@ -69,14 +69,14 @@ cfssl cfssl-bundle cfssl-certinfo cfssljson cfssl-newkey cfssl-scan
 
 **创建 CA 配置文件**
 
-``` bash
-mkdir /root/ssl
-cd /root/ssl
-cfssl print-defaults config > config.json
-cfssl print-defaults csr > csr.json
+```shell script
+$ mkdir -p /apps/ssl
+$ cd /apps/ssl
+$ cfssl print-defaults config > config.json
+$ cfssl print-defaults csr > csr.json
 # 根据config.json文件的格式创建如下的ca-config.json文件
 # 过期时间设置成了 87600h
-cat > ca-config.json <<EOF
+$ cat > ca-config.json <<EOF
 {
   "signing": {
     "default": {
@@ -108,7 +108,8 @@ EOF
 
 创建 `ca-csr.json`  文件，内容如下：
 
-``` json
+```shell script
+$ cat > ca-csr.json <<EOF
 {
   "CN": "kubernetes",
   "key": {
@@ -125,6 +126,7 @@ EOF
     }
   ]
 }
+EOF
 ```
 
 + "CN"：`Common Name`，kube-apiserver 从证书中提取该字段作为请求的用户名 (User Name)；浏览器使用该字段验证网站是否合法；
@@ -142,15 +144,16 @@ ca-config.json  ca.csr  ca-csr.json  ca-key.pem  ca.pem
 
 创建 kubernetes 证书签名请求文件 `kubernetes-csr.json`：
 
-``` json
+```shell script
+$ cat > kubernetes-csr.json <<EOF
 {
     "CN": "kubernetes",
     "hosts": [
       "127.0.0.1",
-      "192.168.177.132",
-      "192.168.177.133",
-      "192.168.177.134",
-      "192.168.177.135",
+      "172.16.111.100",
+      "172.16.111.101",
+      "172.16.111.102",
+      "172.16.111.10",
       "10.254.0.1",
       "kubernetes",
       "kubernetes.default",
@@ -172,6 +175,7 @@ ca-config.json  ca.csr  ca-csr.json  ca-key.pem  ca.pem
         }
     ]
 }
+EOF
 ```
 
 + 如果 hosts 字段不为空则需要指定授权使用该证书的 **IP 或域名列表**，由于该证书后续被 `etcd` 集群和 `kubernetes master` 集群使用，所以上面分别指定了 `etcd` 集群、`kubernetes master` 集群的主机 IP 和 **`kubernetes` 服务的服务 IP**（一般是 `kube-apiserver` 指定的 `service-cluster-ip-range` 网段的第一个IP，如 10.254.0.1）。
@@ -188,14 +192,15 @@ kubernetes.csr  kubernetes-csr.json  kubernetes-key.pem  kubernetes.pem
 或者直接在命令行上指定相关参数：
 
 ``` bash
-echo '{"CN":"kubernetes","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes -hostname="127.0.0.1,192.168.177.132,192.168.177.133,192.168.177.134,192.168.177.135,kubernetes,kubernetes.default" - | cfssljson -bare kubernetes
+echo '{"CN":"kubernetes","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes -hostname="127.0.0.1,172.16.111.100,172.16.111.101,172.16.111.102,172.16.111.10,kubernetes,kubernetes.default" - | cfssljson -bare kubernetes
 ```
 
 ## 创建 admin 证书
 
 创建 admin 证书签名请求文件 `admin-csr.json`：
 
-``` json
+```shell script
+$ cat > admin-csr.json <<EOF
 {
   "CN": "admin",
   "hosts": [],
@@ -213,6 +218,7 @@ echo '{"CN":"kubernetes","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl
     }
   ]
 }
+EOF
 ```
 
 + 后续 `kube-apiserver` 使用 `RBAC` 对客户端(如 `kubelet`、`kube-proxy`、`Pod`)请求进行授权；
@@ -259,7 +265,8 @@ admin.csr  admin-csr.json  admin-key.pem  admin.pem
 
 创建 kube-proxy 证书签名请求文件 `kube-proxy-csr.json`：
 
-``` json
+```shell script
+$ cat > kube-proxy-csr.json <<EOF
 {
   "CN": "system:kube-proxy",
   "hosts": [],
@@ -277,6 +284,7 @@ admin.csr  admin-csr.json  admin-key.pem  admin.pem
     }
   ]
 }
+EOF
 ```
 
 + CN 指定该证书的 User 为 `system:kube-proxy`；
@@ -385,11 +393,11 @@ $ cfssl-certinfo -cert kubernetes.pem
 
 ## 分发证书
 
-将生成的证书和秘钥文件（后缀名为`.pem`）拷贝到集群所有机器的 `/etc/kubernetes/ssl` 目录下备用；
+将生成的证书和秘钥文件（后缀名为`.pem`）拷贝到集群所有机器的 `/apps/server/k8s/ssl` 目录下备用；
 
 ``` bash
-mkdir -p /etc/kubernetes/ssl
-cp *.pem /etc/kubernetes/ssl
+mkdir -p /apps/server/k8s/ssl
+cp *.pem /apps/server/k8s/ssl
 ```
 
 
