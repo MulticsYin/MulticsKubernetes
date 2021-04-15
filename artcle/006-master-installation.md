@@ -116,7 +116,7 @@ KUBE_LOG_LEVEL="--v=0"
 KUBE_ALLOW_PRIV="--allow-privileged=true"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-KUBE_MASTER="--master=http://192.168.177.132:8080"
+KUBE_MASTER="--master=http://172.16.111.100:8080"
 ```
 
 该配置文件同时被kube-apiserver、kube-controller-manager、kube-scheduler、kubelet、kube-proxy使用。
@@ -132,7 +132,7 @@ apiserver配置文件`/etc/kubernetes/apiserver`内容为：
 #
 ## The address on the local server to listen to.
 #KUBE_API_ADDRESS="--insecure-bind-address=sz-pg-oam-docker-test-001.tendcloud.com"
-KUBE_API_ADDRESS="--advertise-address=192.168.177.132 --bind-address=192.168.177.132 --insecure-bind-address=192.168.177.132"
+KUBE_API_ADDRESS="--advertise-address=172.16.111.100 --bind-address=172.16.111.100 --insecure-bind-address=172.16.111.100"
 #
 ## The port on the local server to listen on.
 #KUBE_API_PORT="--port=8080"
@@ -141,7 +141,7 @@ KUBE_API_ADDRESS="--advertise-address=192.168.177.132 --bind-address=192.168.177
 #KUBELET_PORT="--kubelet-port=10250"
 #
 ## Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd-servers=https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379"
+KUBE_ETCD_SERVERS="--etcd-servers=https://172.16.111.100:2379,https://172.16.111.101:2379,https://172.16.111.102:2379"
 #
 ## Address range to use for services
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"

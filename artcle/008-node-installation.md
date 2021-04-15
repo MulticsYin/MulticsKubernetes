@@ -156,17 +156,17 @@ kubelet的配置文件`/etc/kubernetes/kubelet`。其中的IP地址更改为你�
 ## kubernetes kubelet (minion) config
 #
 ## The address for the info server to serve on (set to 0.0.0.0 or "" for all interfaces)
-KUBELET_ADDRESS="--address=192.168.177.132"
+KUBELET_ADDRESS="--address=172.16.111.100"
 #
 ## The port for the info server to serve on
 #KUBELET_PORT="--port=10250"
 #
 ## You may leave this blank to use the actual hostname
-KUBELET_HOSTNAME="--hostname-override=192.168.177.132"
+KUBELET_HOSTNAME="--hostname-override=172.16.111.100"
 #
 ## location of the api-server
 ## COMMENT THIS ON KUBERNETES 1.8+
-# KUBELET_API_SERVER="--api-servers=http://192.168.177.132:8080"
+# KUBELET_API_SERVER="--api-servers=http://172.16.111.100:8080"
 #
 ## pod infrastructure container
 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=gcr.io/google-containers/pause-amd64:3.1"
@@ -278,7 +278,7 @@ kube-proxy配置文件`/etc/kubernetes/proxy`。
 # default config should be adequate
 
 # Add your own!
-KUBE_PROXY_ARGS="--bind-address=192.168.177.132 --hostname-override=192.168.177.132 --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig --cluster-cidr=10.254.0.0/16"
+KUBE_PROXY_ARGS="--bind-address=172.16.111.100 --hostname-override=172.16.111.100 --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig --cluster-cidr=10.254.0.0/16"
 ```
 
 + `--hostname-override` 参数值必须与 kubelet 的值一致，否则 kube-proxy 启动后会找不到该 Node，从而不会创建任何 iptables 规则；
@@ -344,7 +344,7 @@ Commercial support is available at
 </html>
 ```
 
-访问`192.168.177.132:32724`或`192.168.177.133:32724`或者`192.168.177.134:32724`都可以得到nginx的页面。
+访问`172.16.111.100:32724`或`172.16.111.101:32724`或者`172.16.111.102:32724`都可以得到nginx的页面。
 
 **[返回目录](https://github.com/MulticsYin/MulticsKubernetes#kubernetes-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2)**  
 **[下一章 - 安装kubedns插件](https://github.com/MulticsYin/MulticsKubernetes/blob/master/artcle/009-kubedns-addon-installation.md#%E5%AE%89%E8%A3%85kubedns%E6%8F%92%E4%BB%B6)**

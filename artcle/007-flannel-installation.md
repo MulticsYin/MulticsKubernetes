@@ -45,7 +45,7 @@ RequiredBy=docker.service
 # Flanneld configuration options  
 
 # etcd url location.  Point this to the server where etcd runs
-FLANNEL_ETCD_ENDPOINTS="https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379"
+FLANNEL_ETCD_ENDPOINTS="https://172.16.111.100:2379,https://172.16.111.101:2379,https://172.16.111.102:2379"
 
 # etcd config key.  This is the configuration key that flannel queries
 # For address range assignment
@@ -62,13 +62,13 @@ FLANNEL_OPTIONS="-etcd-cafile=/etc/kubernetes/ssl/ca.pem -etcd-certfile=/etc/kub
 执行下面的命令为docker分配IP地址段。
 
 ```bash
-etcdctl --endpoints=https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379 \
+etcdctl --endpoints=https://172.16.111.100:2379,https://172.16.111.101:2379,https://172.16.111.102:2379 \
   --ca-file=/etc/kubernetes/ssl/ca.pem \
   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
   mkdir /kube-centos/network
   
-etcdctl --endpoints=https://192.168.177.132:2379,https://192.168.177.133:2379,https://192.168.177.134:2379 \
+etcdctl --endpoints=https://172.16.111.100:2379,https://172.16.111.101:2379,https://172.16.111.102:2379 \
   --ca-file=/etc/kubernetes/ssl/ca.pem \
   --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \

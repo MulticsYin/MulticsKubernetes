@@ -2,9 +2,9 @@
 
 kuberntes 系统使用 etcd 存储所有数据，本文档介绍部署一个三节点高可用 etcd 集群的步骤，这三个节点复用 kubernetes master 机器，分别命名为`master`、`node01`、`node02`：
 
-+ master：192.168.177.132
-+ node01：192.168.177.133
-+ node02：192.168.177.134
++ master：172.16.111.100
++ node01：172.16.111.101
++ node02：172.16.111.102
 
 ## TLS 认证文件
 
@@ -63,7 +63,7 @@ ExecStart=/usr/local/bin/etcd \
   --listen-client-urls ${ETCD_LISTEN_CLIENT_URLS},http://127.0.0.1:2379 \
   --advertise-client-urls ${ETCD_ADVERTISE_CLIENT_URLS} \
   --initial-cluster-token ${ETCD_INITIAL_CLUSTER_TOKEN} \
-  --initial-cluster infra1=https://192.168.177.132:2380,infra2=https://192.168.177.133:2380,infra3=https://192.168.177.134:2380 \
+  --initial-cluster infra1=https://172.16.111.100:2380,infra2=https://172.16.111.101:2380,infra3=https://172.16.111.102:2380 \
   --initial-cluster-state new \
   --data-dir=${ETCD_DATA_DIR}
 Restart=on-failure
@@ -85,16 +85,16 @@ WantedBy=multi-user.target
 # [member]
 ETCD_NAME=infra1
 ETCD_DATA_DIR="/var/lib/etcd"
-ETCD_LISTEN_PEER_URLS="https://192.168.177.132:2380"
-ETCD_LISTEN_CLIENT_URLS="https://192.168.177.132:2379"
+ETCD_LISTEN_PEER_URLS="https://172.16.111.100:2380"
+ETCD_LISTEN_CLIENT_URLS="https://172.16.111.100:2379"
 
 #[cluster]
-ETCD_INITIAL_ADVERTISE_PEER_URLS="https://192.168.177.132:2380"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="https://172.16.111.100:2380"
 ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster"
-ETCD_ADVERTISE_CLIENT_URLS="https://192.168.177.132:2379"
+ETCD_ADVERTISE_CLIENT_URLS="https://172.16.111.100:2379"
 ```
 
-这是`192.168.177.132`节点的配置，其他两个etcd节点只要将上面的IP地址改成相应节点的IP地址即可。ETCD_NAME换成对应节点的infra1/2/3。
+这是`172.16.111.100`节点的配置，其他两个etcd节点只要将上面的IP地址改成相应节点的IP地址即可。ETCD_NAME换成对应节点的infra1/2/3。
 
 ## 启动 etcd 服务
 

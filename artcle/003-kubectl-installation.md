@@ -16,7 +16,7 @@ chmod a+x /usr/bin/kube*
 ## 创建 kubectl kubeconfig 文件
 
 ``` bash
-export KUBE_APISERVER="https://192.168.177.132:6443"
+export KUBE_APISERVER="https://172.16.111.100:6443"
 
 # 设置集群参数
 kubectl config set-cluster kubernetes \

@@ -42,7 +42,7 @@ cp token.csv /etc/kubernetes/
 
 ``` bash
 cd /etc/kubernetes
-export KUBE_APISERVER="https://192.168.177.132:6443"
+export KUBE_APISERVER="https://172.16.111.100:6443"
 
 # 设置集群参数
 kubectl config set-cluster kubernetes \
@@ -73,7 +73,7 @@ kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
 ## 创建 kube-proxy kubeconfig 文件
 
 ``` bash
-export KUBE_APISERVER="https://192.168.177.132:6443"
+export KUBE_APISERVER="https://172.16.111.100:6443"
 # 设置集群参数
 kubectl config set-cluster kubernetes \
   --certificate-authority=/etc/kubernetes/ssl/ca.pem \
