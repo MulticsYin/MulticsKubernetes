@@ -6,29 +6,30 @@
 
 注意请下载对应的Kubernetes版本的安装包，推荐直接下载`server`包，上面有安装集群的所有`kubernetes`二进制文件。
 
-``` bash
-wget https://dl.k8s.io/v1.9.3/kubernetes-server-linux-amd64.tar.gz
-tar -xzvf kubernetes-server-linux-amd64.tar.gz
-cp kubernetes/server/bin/kubectl /usr/local/bin/
+```shell script
+wget https://dl.k8s.io/v1.21.0/kubernetes-server-linux-amd64.tar.gz
+tar -xzvf kubernetes-server-linux-amd64.tar.gz -C /apps/server/k8s/
+sudo cp /apps/server/k8s/kubernetes/server/bin/kubectl /usr/local/bin/
 chmod a+x /usr/bin/kube*
 ```
 
 ## 创建 kubectl kubeconfig 文件
 
-``` bash
+```shell script
+# 直接设置进 /etc/profile
 export KUBE_APISERVER="https://172.16.111.100:6443"
 
 # 设置集群参数
 kubectl config set-cluster kubernetes \
-  --certificate-authority=/etc/kubernetes/ssl/ca.pem \
+  --certificate-authority=/apps/server/k8s/ssl/ca.pem \
   --embed-certs=true \
   --server=${KUBE_APISERVER}
   
 # 设置客户端认证参数
 kubectl config set-credentials admin \
-  --client-certificate=/etc/kubernetes/ssl/admin.pem \
+  --client-certificate=/apps/server/k8s/ssl/admin.pem \
   --embed-certs=true \
-  --client-key=/etc/kubernetes/ssl/admin-key.pem
+  --client-key=/apps/server/k8s/ssl/admin-key.pem
   
 # 设置上下文参数
 kubectl config set-context kubernetes \
