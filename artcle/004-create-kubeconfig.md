@@ -4,7 +4,7 @@
 
 kubernetes 1.4 开始支持由 `kube-apiserver` 为客户端生成 TLS 证书的 [TLS Bootstrapping](https://kubernetes.io/docs/admin/kubelet-tls-bootstrapping/) 功能，这样就不需要为每个客户端生成证书了；该功能**当前仅支持为 `kubelet`** 生成证书；
 
-因为我的master节点和node节点复用，所有在这一步其实已经安装了kubectl。
+在此部署文档中, master节点和node节点复用，上一步已安装了kubectl。
 
 以下操作只需要在master节点上执行，生成的`*.kubeconfig`文件可以直接拷贝到node节点的`/etc/kubernetes`目录下。
 
@@ -14,9 +14,10 @@ kubernetes 1.4 开始支持由 `kube-apiserver` 为客户端生成 TLS 证书的
 
 Token可以是任意的包含128 bit的字符串，可以使用安全的随机数发生器生成。
 
-``` bash
+```shell script
+mkdir -p /apps/server/k8s/k8s_config
 export BOOTSTRAP_TOKEN=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')
-cat > token.csv <<EOF
+cat > /apps/server/k8s/k8s_config/token.csv <<EOF
 ${BOOTSTRAP_TOKEN},kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 EOF
 ```
@@ -32,21 +33,17 @@ EOF
 3. 重启 kube-apiserver 和 kubelet 进程；
 4. 重新 approve kubelet 的 csr 请求；
 
-``` bash
-cp token.csv /etc/kubernetes/
-```
-
 ## 创建 kubelet bootstrapping kubeconfig 文件
 
 执行下面的命令时需要先安装kubectl命令。
 
-``` bash
-cd /etc/kubernetes
+```shell script
 export KUBE_APISERVER="https://172.16.111.100:6443"
+cd /apps/server/k8s/k8s_config
 
 # 设置集群参数
 kubectl config set-cluster kubernetes \
-  --certificate-authority=/etc/kubernetes/ssl/ca.pem \
+  --certificate-authority=/apps/server/k8s/ssl/ca.pem \
   --embed-certs=true \
   --server=${KUBE_APISERVER} \
   --kubeconfig=bootstrap.kubeconfig
@@ -72,18 +69,19 @@ kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
 
 ## 创建 kube-proxy kubeconfig 文件
 
-``` bash
+```shell script
 export KUBE_APISERVER="https://172.16.111.100:6443"
+
 # 设置集群参数
 kubectl config set-cluster kubernetes \
-  --certificate-authority=/etc/kubernetes/ssl/ca.pem \
+  --certificate-authority=/apps/server/k8s/ssl/ca.pem \
   --embed-certs=true \
   --server=${KUBE_APISERVER} \
   --kubeconfig=kube-proxy.kubeconfig
 # 设置客户端认证参数
 kubectl config set-credentials kube-proxy \
-  --client-certificate=/etc/kubernetes/ssl/kube-proxy.pem \
-  --client-key=/etc/kubernetes/ssl/kube-proxy-key.pem \
+  --client-certificate=/apps/server/k8s/ssl/kube-proxy.pem \
+  --client-key=/apps/server/k8s/ssl/kube-proxy-key.pem \
   --embed-certs=true \
   --kubeconfig=kube-proxy.kubeconfig
 # 设置上下文参数
@@ -103,8 +101,9 @@ kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
 
 将两个 kubeconfig 文件分发到所有 Node 机器的 `/etc/kubernetes/` 目录
 
-``` bash
-cp bootstrap.kubeconfig kube-proxy.kubeconfig /etc/kubernetes/
+```shell script
+scp -r /apps/server/k8s/k8s_config/ multics@172.16.111.101:/apps/server/k8s/
+scp -r /apps/server/k8s/k8s_config/ multics@172.16.111.102:/apps/server/k8s/
 ```
 
 
